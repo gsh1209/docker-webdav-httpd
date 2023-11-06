@@ -35,6 +35,8 @@ RUN set -ex; \
         sed -i -e "s|^$i .*|$i www-data|" "conf/httpd.conf"; \
     done; \
     \
+    # Fix httpd AH00558
+    sed -i -e '/^#ServerName.*/a ServerName localhost:80' "conf/httpd.conf"; \
     # Include enabled configs and sites.
     printf '%s\n' "Include conf/conf-enabled/*.conf" \
         >> "conf/httpd.conf"; \
